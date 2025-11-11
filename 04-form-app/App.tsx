@@ -1,10 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { PersonalInfoScreen } from './screens/PersonalInfoScreen';
+import { usePersonForm } from './state/usePersonForm';
 
 export default function App() {
+
+  const { person, updateField } = usePersonForm()
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <PersonalInfoScreen
+        person={person}
+        onChange={updateField}
+      />
       <StatusBar style="auto" />
     </View>
   );
