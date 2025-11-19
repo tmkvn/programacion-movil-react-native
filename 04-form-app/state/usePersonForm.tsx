@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { emptyPerson, Person } from "../models/person"
 
+export const TOTAL_STEPS = 3;
+
 export const usePersonForm = () => {
 
   const [person, setPerson] = useState<Person>(emptyPerson);
