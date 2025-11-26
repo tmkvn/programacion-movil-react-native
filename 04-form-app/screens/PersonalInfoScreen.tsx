@@ -1,4 +1,4 @@
-import { Text, View } from "react-native"
+import { Text, View, StyleSheet } from "react-native"
 import { FormInput } from "../components/FormInput"
 import { Person } from "../models/person"
 import { FromButton } from "../components/FromButton";
@@ -12,8 +12,8 @@ type PersonalInfoScreenProps = {
 
 export const PersonalInfoScreen = ({ person, onChange, onNext }: PersonalInfoScreenProps) => {
   return (
-    <View>
-      <Text>Datos Personales</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Datos Personales</Text>
       <FormInput
         label="Nombre"
         placeholder="Ingresa tu nombre"
@@ -30,3 +30,14 @@ export const PersonalInfoScreen = ({ person, onChange, onNext }: PersonalInfoScr
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 16,
+  }
+})
