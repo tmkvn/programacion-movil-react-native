@@ -1,12 +1,38 @@
-import { Text, View, StyleSheet } from "react-native"
+import { Text, View, StyleSheet, Alert } from "react-native"
 import { Person } from "../models/person"
 import { FromButton } from "../components/FromButton"
+import { useState } from "react"
+import { regsistrarPersona } from "../service/personService"
 
 type SummaryScreenProps = {
   person: Person
   onBack?: () => void
 }
-export const SummaryScreen = ({ person, onBack: onBlack }: SummaryScreenProps) => {
+
+export const SummaryScreen = ({ person, onBack: onBack }: SummaryScreenProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleRegister = async () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      await regsistrarPersona(person);
+      Alert.alert(
+        'Registro exitoso',
+        'La persona fue creada con éxito',
+        [{ text: 'Aceptar', onPress: onBack }]
+      )
+    } catch (error) {
+      Alert.alert('Error al registrar')
+    } finally {
+      setIsSubmitting(false);
+    }
+
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Resumen</Text>
@@ -16,7 +42,12 @@ export const SummaryScreen = ({ person, onBack: onBlack }: SummaryScreenProps) =
         <Text style={styles.row}>Correo: {person.email}</Text>
         <Text style={styles.row}>Telefono: {person.phone}</Text>
       </View>
-      <FromButton label="Regresar" onPress={onBlack} />
+      <FromButton
+        label="Registrar"
+        disabled={isSubmitting}
+        onPress={handleRegister}
+      />
+      <FromButton label="Registar otra persona" onPress={onBack} />
     </View>
   )
 }
